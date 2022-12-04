@@ -18,6 +18,7 @@ import { RootState } from "src/store";
 import ClaimableTokenBox from "src/components/Claim/ClaimableTokenBox";
 import useErrorHandler from "src/hooks/useErrorHandler";
 import { getStakeKey } from "src/services/common";
+import { useQueue } from "./hooks";
 
 function Claim() {
   const dispatch = useDispatch();
@@ -42,6 +43,7 @@ function Claim() {
   const [stakeAddress, setStakeAddress] = useState<string>("");
   const [claimMyRewardLoading, setClaimMyRewardLoading] =
     useState<boolean>(false);
+  const queue = useQueue();
 
   useEffect(() => {
     if (claimableTokens.length) {
@@ -349,7 +351,12 @@ function Claim() {
 
   return (
     <>
-      <p className="text-3xl">Claim your rewards</p>
+      <p className="text-3xl flex items-center gap-2">
+        Claim your rewards
+        <div className="background rounded-lg w-fit text-sm h-full flex items-center justify-center px-2.5">
+          Queue: {queue}
+        </div>
+      </p>
       <div className="flex flex-col gap-4">
         {renderCheckRewardsStep()}
         {renderStakingInfoStep()}
